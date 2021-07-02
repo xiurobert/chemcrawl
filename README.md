@@ -5,3 +5,13 @@ Tool to help people memorise dumb bs for h2 chemistry 9759 (SINGAPORE) because t
 - Organic Chemistry
   - Learn reactions
   - Sort rxns
+    - By type of rxn
+    - By topic
+    - Etc??? suggestions in issues pls
+- Inorganic
+  - Learn to explain shit
+  - Concepts
+- Getting an actual education
+  - ACTUALLY understanding the bloody concepts
+- Mafs
+  - Bruh
