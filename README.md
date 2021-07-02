@@ -10,6 +10,8 @@ Tool to help people memorise dumb bs for h2 chemistry 9759 (SINGAPORE) because t
     - By reagent
     - By conditions (why would you do that)
     - Etc??? suggestions in issues pls
+  - Distinguishing tests
+    - Sort
 - Inorganic
   - Learn to explain shit
   - Concepts
