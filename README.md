@@ -7,6 +7,8 @@ Tool to help people memorise dumb bs for h2 chemistry 9759 (SINGAPORE) because t
   - Sort rxns
     - By type of rxn
     - By topic
+    - By reagent
+    - By conditions (why would you do that)
     - Etc??? suggestions in issues pls
 - Inorganic
   - Learn to explain shit
