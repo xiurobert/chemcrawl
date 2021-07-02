@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/xiurobert/chemcrawl/issues"
   },
-  "homepage": "https://github.com/xiurobert/chemcrawl#readme"
+  "homepage": "https://github.com/xiurobert/chemcrawl#readme",
+  "dependencies": {
+    "mongodb": "^3.6.9"
+  }
 }
