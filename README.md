@@ -1,5 +1,5 @@
 # chemcrawl
-Tool to help people memorise dumb bs for h2 chemistry 9759 (SINGAPORE) because the education system makes no sense
+The reason I have to create this tool is the same reason you learn nothing real by mugging. Because you don't intuitively understand anything
 
 ## Todo list
 - Organic Chemistry
