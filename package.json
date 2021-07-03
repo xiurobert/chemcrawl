@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/xiurobert/chemcrawl#readme",
   "dependencies": {
+    "bootstrap": "^4.6.0",
     "express": "^4.17.1",
-    "mongodb": "^3.6.9"
+    "mongodb": "^3.6.9",
+    "twing": "^5.0.2"
   }
 }

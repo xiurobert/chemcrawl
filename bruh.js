@@ -8,6 +8,9 @@ if (process.env.NODE_ENV === 'development') {
     conf = require("./config.json");
 }
 
+// express setup
+bruhg.use(express.static('public'));
+
 module.exports = {
     app: bruhg,
     config: conf
