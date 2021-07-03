@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // express setup
-bruhg.use(express.static('public'));
+bruhg.use('/public', express.static('public'));
 
 module.exports = {
     app: bruhg,

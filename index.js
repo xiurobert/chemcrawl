@@ -7,7 +7,9 @@ const twing = require("./bruh").twing;
 app.use(nocache());
 
 app.get('/', function (req, res){
-    twing.render('index.twig',).then(output => res.end(output));
+    twing.render('index.twig', {
+        "app_name": conf.app.name
+    }).then(output => res.end(output));
 });
 
 

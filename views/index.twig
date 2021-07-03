@@ -1,1 +1,12 @@
-hello idiotso
+{% extends 'includes/layout.twig' %}
+{% set selected = 'index' %}
+{% set mode = 'dark' %}
+{% set title = 'Home' %}
+
+{% block head %}
+    <link rel="stylesheet" href="/public/styles/index.min.css">
+{% endblock %}
+
+{% block main %}
+    <h1>Test</h1>
+{% endblock %}
