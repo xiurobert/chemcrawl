@@ -4,5 +4,8 @@
   },
   "server": {
     "port": 6969
+  },
+  "app": {
+    "name": "chemcrawl"
   }
 }
