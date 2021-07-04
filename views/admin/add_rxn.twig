@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-sm">
                 <label for="rxnType" class="form-label">Reaction Type</label>
-                <select class="form-select" id="rxnType">
+                <select class="form-select" id="rxnType" name="rxnType">
                     <option value="add">Addition</option>
                     <option value="sub">Substitution</option>
                     <option value="eli">Elimination</option>
@@ -38,13 +38,13 @@
                     <label for="rxnSubType">
                         Reaction Sub type
                     </label>
-                    <select class="form-select" id="rxnSubType">
+                    <select class="form-select" id="rxnSubType" name="rxnSubType">
                         <option value="nu">Nucleophilic</option>
                         <option value="ep">Electrophilic</option>
                     </select>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="needsMechanism">
+                    <input class="form-check-input" type="checkbox" value="" id="needsMechanism" name="rxnNeedsMech">
                     <label class="form-check-label" for="needsMechanism">
                         Needs mechanism
                     </label>
@@ -52,15 +52,15 @@
             </div>
             <div class="col-sm">
                 <label for="rxnReagents" class="form-label">Reaction Reagents</label>
-                <select class="form-select" multiple id="rxnReagents">
+                <select class="form-select" multiple id="rxnReagents" name="rxnReagents">
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                 </select>
             </div>
             <div class="col-sm">
-                <label for="rxnReagents" class="form-label">Reaction Conditions</label>
-                <select class="form-select" multiple id="rxnReagents">
+                <label for="rxnConditions" class="form-label">Reaction Conditions</label>
+                <select class="form-select" multiple id="rxnConditions" name="rxnConditions">
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
