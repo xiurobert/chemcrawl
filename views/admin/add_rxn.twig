@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block main %}
-    <form class="container">
+    <form class="container" action="/admin/addrxn" method="post">
         <div class="row">
             <div class="col text-center">
                 <h1 class="mt-5">Add Reaction</h1>
@@ -51,21 +51,67 @@
                 </div>
             </div>
             <div class="col-sm">
-                <label for="rxnReagents" class="form-label">Reaction Reagents</label>
-                <select class="form-select" multiple id="rxnReagents" name="rxnReagents">
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-8 text-center align-self-center">
+                        <label for="rxnReagents-0" class="form-label">Reaction Reagents</label>
+                    </div>
+                    <div class="col-md-4 p-3 text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnReagent')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('reagentsList')">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="reagentsList">
+                        <input type="text" class="form-control mb-2" id="rxnReagents-0" name="rxnReagents-0"
+                               placeholder="Reaction reagent">
+                    </div>
+                </div>
+
             </div>
             <div class="col-sm">
-                <label for="rxnConditions" class="form-label">Reaction Conditions</label>
-                <select class="form-select" multiple id="rxnConditions" name="rxnConditions">
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-8 text-center align-self-center">
+                        <label for="rxnConditions-0" class="form-label">Reaction Conditions</label>
+                    </div>
+                    <div class="col-md-4 p-3 text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone()">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="deleteLastCondition()">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="conditionsList">
+                        <input type="text" class="form-control mb-2" id="rxnConditions-0" name="rxnConditions-0"
+                               placeholder="Reaction condition">
+                    </div>
+                </div>
+
             </div>
+        </div>
+        <div class="row">
+{#            <div class="col-lg">#}
+{#                <div class="row">#}
+{#                    <div class="col-md-8 text-center align-self-center">#}
+{#                        <label for="rxnReactants-0" class="form-label">Reactants</label>#}
+{#                    </div>#}
+{#                    <div class="col-md-4 p-3 text-center">#}
+{#                        <div class="btn-group" role="group">#}
+{#                            <button class="btn btn-{{ mode }}" type="button" onclick="addNewReagent()">+</button>#}
+{#                            <button class="btn btn-{{ mode }}" type="button" onclick="deleteLastReagent()">-</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="row">#}
+{#                    <div class="col" id="reagentsList">#}
+{#                        <input type="text" class="form-control mb-2" id="rxnReagents-0" name="rxnReagents-0"#}
+{#                               placeholder="Reaction reagent">#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            <div class="col-lg"></div>
         </div>
     </form>
 {% endblock %}
@@ -81,8 +127,22 @@
         })
     </script>
     <script>
-        $.ajax('/admin/addrxn', {
-            method: 'POST'
-        })
+        function clone(idOfInputToClone) {
+            let $da_thing = $(`input[id^=${idOfInputToClone}]:last`);
+            let num = parseInt($da_thing.prop("id").match(/\d+/g), 10) +1;
+            let $clone = $da_thing.clone().prop('id', `${idOfInputToClone}-${num}`);
+            $clone.prop('name', `${idOfInputToClone}-${num}`)
+            $da_thing.after($clone);
+        }
+
+        function delLast(divContainingListOfInputs) {
+            $(`${divContainingListOfInputs} input`).last().remove();
+        }
+
+
+
+        // $.ajax('/admin/addrxn', {
+        //     method: 'POST'
+        // })
     </script>
 {% endblock %}
