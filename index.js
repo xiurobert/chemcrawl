@@ -12,6 +12,14 @@ app.get('/', function (req, res){
     }).then(output => res.end(output));
 });
 
+app.get('/suggest', function (req, res) {
+
+});
+
+app.post('/suggest', function (req, res) {
+
+})
+
 
 app.listen(conf.server.port, () => {
     console.log(`[chemcrawl] Started express server on port ${conf.server.port}`)

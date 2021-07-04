@@ -1,0 +1,26 @@
+@use 'colors';
+
+.mode-dark {
+  #navbar-search {
+    background-color: colors.$dark-bg-color;
+    color: colors.$dark-text-color;
+
+    &::placeholder {
+      color: colors.$dark-text-color;
+      opacity: 1
+    }
+  }
+
+}
+
+.mode-light {
+  #navbar-search {
+    background-color: colors.$light-bg-color;
+    color: colors.$light-text-color;
+
+    &::placeholder {
+      color: colors.$light-text-color;
+      opacity: 1
+    }
+  }
+}

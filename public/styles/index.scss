@@ -1,7 +1,14 @@
+@use 'colors';
+
 .mode-dark {
-  background-color: #444444;
+  background-color: colors.$dark-bg-color ;
+  main {
+    background-color: colors.$dark-bg-color;
+    color: colors.$light-bg-color;
+
+  }
 }
 
 .mode-light {
-  background-color: #fff;
+  background-color: colors.$light-bg-color;
 }
