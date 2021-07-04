@@ -23,14 +23,14 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-{{ mode }} bg-{{ mode }}">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">{{ app_name }}</a>
+            <a class="navbar-brand" href="/">{{ app_name }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link {% if selected == 'index' %}active{% endif %}" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">All Content</a>
@@ -39,12 +39,11 @@
                         <a class="nav-link" href="#">Suggest Content</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle {% if selected starts with "organic" %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Organic Chemistry
-
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Reactions</a></li>
+                            <li><a class="dropdown-item {% if selected == "organic_rxnlist" %}active{% endif %}" href="/organic/rxnlist">Reactions</a></li>
                             <li><a class="dropdown-item" href="#">Distinguishing tests</a></li>
                             <li><a class="dropdown-item" href="#">Concepts</a></li>
                         </ul>
