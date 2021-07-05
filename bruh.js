@@ -3,8 +3,10 @@ const bodyParser = require("body-parser");
 const app = express();
 const {MongoClient} = require("mongodb");
 const {TwingEnvironment, TwingLoaderFilesystem} = require('twing');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
-let twing
+let twing;
 
 let conf;
 if (process.env.NODE_ENV === 'development') {
@@ -19,14 +21,21 @@ if (process.env.NODE_ENV === 'development') {
     twing = new TwingEnvironment(new TwingLoaderFilesystem('./views'));
 }
 
-// express setup
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/public', express.static('public'));
-
 const client = new MongoClient(conf.db.uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
+
+// express setup
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+    secret: conf.app.sess_secret,
+    store: MongoStore.create({
+        client,
+        dbName: conf.db.name
+    })
+}))
+app.use('/public', express.static('public'));
 
 module.exports = {
     app: app,

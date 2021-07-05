@@ -7,6 +7,7 @@
     "port": 3500
   },
   "app": {
-    "name": "chemcrawl"
+    "name": "chemcrawl",
+    "sess_secret": "blah blah blah blah blah"
   }
 }

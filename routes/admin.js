@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const {twing, config, mongo_client, db} = require("../bruh");
 const router = express.Router();
 const logging = require("../logging");
@@ -11,7 +12,24 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
+    mongo_client.connect().then(() => {
+        const db = mongo_client.db(config.db.name)
+        const coll = db.collection("admins");
+        coll.findOne({'username': req.body["username"]}).then(res => {
+            // res['password']
+            if (!res) {
+                // no user found
+                res.status = 400;
+                res.end('No such username');
+            } else {
+                bcrypt.compare(req.body["password"], res["password"]).then(result => {
+                    if (result) {
 
+                    }
+                })
+            }
+        })
+    })
 });
 
 router.get('/addrxn', (req, res) => {

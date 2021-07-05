@@ -6,7 +6,7 @@ module.exports = () => {
     return (req, res, next) => {
         mongo_client.connect().then(() => {
             const db = mongo_client.db(config.db.name);
-            const collection = db.collection("admins");
+            const collection = db.collection("sessions");
 
             collection.findOne(mongo.ObjectId(req.session)).then((result) => {
                 if (!result) {
