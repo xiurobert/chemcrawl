@@ -39,7 +39,7 @@ router.post('/addrxn', (req, res) => {
         const coll = db.collection('organic_reactions');
         coll.insertOne(data).then((result) => {
             console.log(
-                `${logging.prefix} > ${chalk.magenta('DB')} > Created ORG_RXN ${chalk.greenBright(result.insertedId)}`);
+                `${logging.prefix} ${logging.comp.db} Created ORG_RXN ${chalk.greenBright(result.insertedId)}`);
             res.send(`${result.insertedCount} doc was inserted into organic_reactions, id: ${result.insertedId}`);
         })
         
