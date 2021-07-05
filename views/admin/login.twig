@@ -8,7 +8,43 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container">
+    <form class="container" method="post" action="/admin/login">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <h1 class="card-title text-center">Admin Login</h1>
+                        <div class="row">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="usernameAddon">Username</span>
+                                    <input type="text" name="username" class="form-control" required placeholder="Username" aria-label="Username" aria-describedby="usernameAddon">
+                                </div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="passwordAddon">Password</span>
+                                    <input type="password" name="password" class="form-control" required placeholder="Password" aria-label="Password" aria-describedby="passwordAddon">
+                                </div>
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <button class="btn btn-success" type="submit">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
 
-    </div>
+    </form>
 {% endblock %}

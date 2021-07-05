@@ -4,6 +4,16 @@ const router = express.Router();
 const logging = require("../logging");
 const chalk = require("chalk");
 
+router.get('/login', (req, res) => {
+    twing.render('admin/login.twig', {
+        "app_name": config.app.name
+    }).then(output => res.end(output));
+})
+
+router.post('/login', (req, res) => {
+
+});
+
 router.get('/addrxn', (req, res) => {
     twing.render('admin/add_rxn.twig', {
         "app_name": config.app.name
