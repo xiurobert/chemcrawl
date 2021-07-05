@@ -32,5 +32,5 @@ module.exports = {
     app: app,
     config: conf,
     twing: twing,
-    mongo_client: client
+    mongo_client: client,
 };

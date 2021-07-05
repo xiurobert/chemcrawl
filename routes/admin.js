@@ -1,5 +1,5 @@
 const express = require('express');
-const {twing, config, mongo_client} = require("../bruh");
+const {twing, config, mongo_client, db} = require("../bruh");
 const router = express.Router();
 
 router.get('/addrxn', (req, res) => {
@@ -33,10 +33,14 @@ router.post('/addrxn', (req, res) => {
         }
     }
     mongo_client.connect().then(() => {
-
+        const db = mongo_client.db(config.db.name);
+        const coll = db.collection('organic_reactions');
+        coll.insertOne(data).then((result) => {
+            console.log(`${result.insertedCount} doc was inserted into organic_reactions, id: ${result.insertedId}`);
+            res.send(`${result.insertedCount} doc was inserted into organic_reactions, id: ${result.insertedId}`);
+        })
+        
     })
-
-    res.send(data);
 
 })
 
