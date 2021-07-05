@@ -24,13 +24,19 @@ router.post('/login', (req, res) => {
             } else {
                 bcrypt.compare(req.body["password"], res["password"]).then(result => {
                     if (result) {
-
+                        req.session.loggedIn = true;
+                        req.session.userId = res["_id"];
+                        res.redirect('/admin/dashboard');
                     }
                 })
             }
         })
     })
 });
+
+router.get('/dashboard', (req, res) => {
+    res.end('dashboard');
+})
 
 router.get('/addrxn', (req, res) => {
     twing.render('admin/add_rxn.twig', {

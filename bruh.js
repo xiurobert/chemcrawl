@@ -30,6 +30,8 @@ const client = new MongoClient(conf.db.uri, {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: conf.app.sess_secret,
+    resave: false,
+    saveUninitialized: true,
     store: MongoStore.create({
         client,
         dbName: conf.db.name
