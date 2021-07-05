@@ -1,5 +1,7 @@
 const express = require("express");
-const bruhg = express();
+const bodyParser = require("body-parser");
+const app = express();
+const {MongoClient} = require("mongodb");
 const {TwingEnvironment, TwingLoaderFilesystem} = require('twing');
 
 let twing
@@ -18,10 +20,17 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // express setup
-bruhg.use('/public', express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/public', express.static('public'));
+
+const client = new MongoClient(conf.db.uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
 
 module.exports = {
-    app: bruhg,
+    app: app,
     config: conf,
-    twing: twing
+    twing: twing,
+    mongo_client: client
 };

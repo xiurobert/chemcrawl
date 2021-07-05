@@ -9,6 +9,12 @@ router.get('/addrxn', (req, res) => {
 })
 
 router.post('/addrxn', (req, res) => {
+    let key = "";
+    for (key in req.body) {
+        if (key.startsWith('rxnConditions')) {
+
+        }
+    }
 
 })
 

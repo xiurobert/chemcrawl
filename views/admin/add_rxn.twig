@@ -57,8 +57,8 @@
                     </div>
                     <div class="col-md-4 p-3 text-center">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnReagent')">+</button>
-                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('reagentsList')">-</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnReagents')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnReagents')">-</button>
                         </div>
                     </div>
                 </div>
@@ -77,8 +77,8 @@
                     </div>
                     <div class="col-md-4 p-3 text-center">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-{{ mode }}" type="button" onclick="clone()">+</button>
-                            <button class="btn btn-{{ mode }}" type="button" onclick="deleteLastCondition()">-</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnConditions')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnConditions')">-</button>
                         </div>
                     </div>
                 </div>
@@ -92,26 +92,49 @@
             </div>
         </div>
         <div class="row">
-{#            <div class="col-lg">#}
-{#                <div class="row">#}
-{#                    <div class="col-md-8 text-center align-self-center">#}
-{#                        <label for="rxnReactants-0" class="form-label">Reactants</label>#}
-{#                    </div>#}
-{#                    <div class="col-md-4 p-3 text-center">#}
-{#                        <div class="btn-group" role="group">#}
-{#                            <button class="btn btn-{{ mode }}" type="button" onclick="addNewReagent()">+</button>#}
-{#                            <button class="btn btn-{{ mode }}" type="button" onclick="deleteLastReagent()">-</button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="row">#}
-{#                    <div class="col" id="reagentsList">#}
-{#                        <input type="text" class="form-control mb-2" id="rxnReagents-0" name="rxnReagents-0"#}
-{#                               placeholder="Reaction reagent">#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-            <div class="col-lg"></div>
+            <div class="col-lg">
+                <div class="row">
+                    <div class="col-md-8 text-center align-self-center">
+                        <label for="rxnReactants-0" class="form-label">Reactants</label>
+                    </div>
+                    <div class="col-md-4 p-3 text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnReactants')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnReactants')">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="reagentsList">
+                        <input type="text" class="form-control mb-2" id="rxnReactants-0" name="rxnReactants-0"
+                               placeholder="Reactant">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="row">
+                    <div class="col-md-8 text-center align-self-center">
+                        <label for="rxnProducts-0">Products</label>
+                    </div>
+                    <div class="col-md-4 p-3 text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnProducts')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnProducts')">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="reagentsList">
+                        <input type="text" class="form-control mb-2" id="rxnProducts-0" name="rxnProducts-0"
+                               placeholder="Product">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
         </div>
     </form>
 {% endblock %}
@@ -127,16 +150,19 @@
         })
     </script>
     <script>
-        function clone(idOfInputToClone) {
-            let $da_thing = $(`input[id^=${idOfInputToClone}]:last`);
+        function clone(startingIdOfInputToClone) {
+            let $da_thing = $(`input[id^=${startingIdOfInputToClone}]:last`);
             let num = parseInt($da_thing.prop("id").match(/\d+/g), 10) +1;
-            let $clone = $da_thing.clone().prop('id', `${idOfInputToClone}-${num}`);
-            $clone.prop('name', `${idOfInputToClone}-${num}`)
+            let $clone = $da_thing.clone().prop('id', `${startingIdOfInputToClone}-${num}`);
+            $clone.prop('name', `${startingIdOfInputToClone}-${num}`)
             $da_thing.after($clone);
         }
 
-        function delLast(divContainingListOfInputs) {
-            $(`${divContainingListOfInputs} input`).last().remove();
+        function delLast(startingIdOfInputToDel) {
+            let $dae = $(`input[id^=${startingIdOfInputToDel}]`).last();
+            if ($dae.parent().children().length > 1) {
+                $dae.remove();
+            }
         }
 
 
