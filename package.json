@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/xiurobert/chemcrawl#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
     "chalk": "^4.1.1",
