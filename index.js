@@ -1,8 +1,6 @@
-const mango = require("mongodb");
 const nocache = require("nocache");
 const app = require("./bruh").app;
 const conf = require("./bruh").config;
-const twing = require("./bruh").twing;
 
 app.use(nocache());
 
@@ -12,6 +10,9 @@ app.use('/admin', require("./routes/admin"));
 
 
 app.listen(conf.server.port, () => {
+    if (process.env.NODE_ENV === 'development') {
+        console.log('[DEV MODE] Starting up...')
+    }
     console.log(`[chemcrawl] Started express server on port ${conf.server.port}`)
 });
 

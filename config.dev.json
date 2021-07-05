@@ -1,6 +1,7 @@
 {
   "db": {
-    "uri": "mongodb://localhost:27017"
+    "uri": "mongodb://localhost:27017",
+    "name": "chemcrawl_test"
   },
   "server": {
     "port": 6969
