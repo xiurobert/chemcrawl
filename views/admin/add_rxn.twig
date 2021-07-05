@@ -25,22 +25,22 @@
             <div class="col-sm">
                 <label for="rxnType" class="form-label">Reaction Type</label>
                 <select class="form-select" id="rxnType" name="rxnType">
-                    <option value="add">Addition</option>
-                    <option value="sub">Substitution</option>
-                    <option value="eli">Elimination</option>
-                    <option value="hyd">Hydrolysis</option>
-                    <option value="con">Condensation</option>
-                    <option value="oxi">Oxidation</option>
-                    <option value="red">Reduction</option>
-                    <option value="rea">Rearrangement</option>
+                    <option value="Addition">Addition</option>
+                    <option value="Substitution">Substitution</option>
+                    <option value="Elimination">Elimination</option>
+                    <option value="Hydrolysis">Hydrolysis</option>
+                    <option value="Condensation">Condensation</option>
+                    <option value="Oxidation">Oxidation</option>
+                    <option value="Reduction">Reduction</option>
+                    <option value="Rearrangement">Rearrangement</option>
                 </select>
                 <div id="rsubType">
                     <label for="rxnSubType">
                         Reaction Sub type
                     </label>
                     <select class="form-select" id="rxnSubType" name="rxnSubType">
-                        <option value="nu">Nucleophilic</option>
-                        <option value="ep">Electrophilic</option>
+                        <option value="Nucleophilic">Nucleophilic</option>
+                        <option value="Electrophilic">Electrophilic</option>
                     </select>
                 </div>
                 <div class="form-check">
@@ -142,7 +142,7 @@
 {% block js %}
     <script>
         $("#rxnType").change(function () {
-            if (!["add", "sub"].includes($("#rxnType").val())) {
+            if (!["addition", "substitution"].includes($("#rxnType").val().toLowerCase())) {
                 $("#rsubType").hide();
             } else {
                 $("#rsubType").show();

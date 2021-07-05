@@ -1,0 +1,156 @@
+{% extends 'includes/layout.twig' %}
+{% set selected = 'organic_rxninfo' %}
+{% set mode = 'dark' %}
+{% set title = 'Reaction Info' %}
+
+{% block head %}
+    <link rel="stylesheet" href="/public/styles/rxn_info.min.css">
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col text-center">
+                <h1>Reaction: <b>{{ result["name"] }}</b></h1>
+                <span>Reaction ID: </span><pre>{{ result['_id'] }}</pre>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body text-center fw-bold">
+                        <h5 class="card-title">Reaction Type</h5>
+                        <p class="card-text">{{ result["type"] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% if result['subType'] %}
+                <div class="col-md">
+                    <div class="card">
+                        <div class="card-body text-center fw-bold">
+                            <h5 class="card-title">Reaction SubType</h5>
+                            <p class="card-text">{{ result["subType"] }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body text-center fw-bold">
+                        <h5 class="card-title">Mechanism needs to be known</h5>
+                        <p class="card-text">
+                            {% if result['needsMech'] %}
+                                Yes &#9989;
+                            {% else %}
+                                No &#10060;
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-5">
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body fw-bold">
+                        <h5 class="card-title text-center">Reagents</h5>
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <table class="table table-bordered text-center">
+                                        <tbody>
+                                        {% for reagent in result['reagents'] %}
+                                            <tr>
+                                                <td>{{ reagent }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body fw-bold">
+                        <h5 class="card-title text-center">Conditions</h5>
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <table class="table table-bordered text-center">
+                                        <tbody>
+                                        {% for condition in result['conditions'] %}
+                                            <tr>
+                                                <td>{{ condition }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md">
+                <div class="col-md">
+                    <div class="card">
+                        <div class="card-body fw-bold">
+                            <h5 class="card-title text-center">Reagents</h5>
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-6">
+                                        <table class="table table-bordered text-center">
+                                            <tbody>
+                                            {% for reactants in result['reactants'] %}
+                                                <tr>
+                                                    <td>{{ reactants }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body fw-bold">
+                        <h5 class="card-title text-center">Reagents</h5>
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <table class="table table-bordered text-center">
+                                        <tbody>
+                                        {% for product in result['products'] %}
+                                            <tr>
+                                                <td>{{ product }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

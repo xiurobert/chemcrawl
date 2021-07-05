@@ -17,7 +17,7 @@ router.post('/addrxn', (req, res) => {
         name: req.body["rxnName"],
         type: req.body["rxnType"],
         needsMech: !!req.body["rxnNeedsMech"] ,
-        subType: ["add", "sub"].includes(req.body["rxnType"])  ? req.body["rxnSubType"] : null,
+        subType: ["Addition", "Substitution"].includes(req.body["rxnType"])  ? req.body["rxnSubType"] : null,
         conditions: [],
         reagents: [],
         reactants: [],
@@ -40,7 +40,7 @@ router.post('/addrxn', (req, res) => {
         coll.insertOne(data).then((result) => {
             console.log(
                 `${logging.prefix} ${logging.comp.db} Created ORG_RXN ${chalk.greenBright(result.insertedId)}`);
-            res.send(`${result.insertedCount} doc was inserted into organic_reactions, id: ${result.insertedId}`);
+            res.redirect(`/organic/rxn/${result.insertedId}`);
         })
         
     })
