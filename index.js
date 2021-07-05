@@ -1,6 +1,8 @@
 const nocache = require("nocache");
 const app = require("./bruh").app;
 const conf = require("./bruh").config;
+const chalk = require('chalk');
+const logging = require("./logging");
 
 app.use(nocache());
 
@@ -11,8 +13,8 @@ app.use('/admin', require("./routes/admin"));
 
 app.listen(conf.server.port, () => {
     if (process.env.NODE_ENV === 'development') {
-        console.log('[DEV MODE] Starting up...')
+        console.log(`${logging.prefix} > ${chalk.red.bold('DEV MODE')} Starting up...`)
     }
-    console.log(`[chemcrawl] Started express server on port ${conf.server.port}`)
+    console.log(`${logging.prefix} Started express server on port ${chalk.yellowBright(conf.server.port)}`)
 });
 

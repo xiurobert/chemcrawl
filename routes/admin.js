@@ -1,6 +1,8 @@
 const express = require('express');
 const {twing, config, mongo_client, db} = require("../bruh");
 const router = express.Router();
+const logging = require("../logging");
+const chalk = require("chalk");
 
 router.get('/addrxn', (req, res) => {
     twing.render('admin/add_rxn.twig', {
@@ -36,7 +38,8 @@ router.post('/addrxn', (req, res) => {
         const db = mongo_client.db(config.db.name);
         const coll = db.collection('organic_reactions');
         coll.insertOne(data).then((result) => {
-            console.log(`${result.insertedCount} doc was inserted into organic_reactions, id: ${result.insertedId}`);
+            console.log(
+                `${logging.prefix} > ${chalk.magenta('DB')} > Created ORG_RXN ${chalk.greenBright(result.insertedId)}`);
             res.send(`${result.insertedCount} doc was inserted into organic_reactions, id: ${result.insertedId}`);
         })
         
