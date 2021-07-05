@@ -1,6 +1,6 @@
 {% extends 'includes/layout.twig' %}
 {% set selected = 'organic_rxninfo' %}
-{% set mode = 'dark' %}
+{% set mode = 'light' %}
 {% set title = 'Reaction Info' %}
 
 {% block head %}
@@ -149,6 +149,16 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>'
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success">Edit</button>
+                    <button type="button" class="btn btn-info">Add example</button>
+                    <button type="button" class="btn btn-warning">Add mechanism</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
                 </div>
             </div>
         </div>

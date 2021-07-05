@@ -1,12 +1,47 @@
 {% extends 'includes/layout.twig' %}
 {% set selected = 'organic_rxnlist' %}
 {% set mode = 'dark' %}
-{% set title = 'List' %}
+{% set title = 'List of reactions' %}
 
 {% block head %}
 
 {% endblock %}
 
 {% block main %}
-    <h1>bruh</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">All reactions</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Reaction Name</th>
+                            <th scope="col">Reaction Type</th>
+                            <th scope="col">Mechanism Needed</th>
+                            <th scope="col">View Reaction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for rxn in result %}
+                        <tr>
+                            <th>{{ rxn.name }}</th>
+                            <th>{{ rxn.type }}</th>
+                            <th>{{ rxn.needsMech ? 'Yes' : 'No'}}</th>
+                            <th>
+                                <button class="btn btn-success"
+                                        onclick="window.open('/organic/rxn/{{ rxn['_id'] }}', '_blank')">
+                                    View Reaction
+                                </button>
+                            </th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

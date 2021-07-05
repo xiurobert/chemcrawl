@@ -5,9 +5,24 @@ const mongo = require("mongodb");
 const logging = require('../logging');
 
 router.get('/rxnlist', function (req, res) {
-    twing.render('organic/list.twig', {
-        "app_name": config.app.name
-    }).then(output => res.end(output));
+    mongo_client.connect().then(() => {
+        const db = mongo_client.db(config.db.name);
+        const coll = db.collection('organic_reactions');
+
+        async function do_things() {
+            return await coll.find().toArray()
+        }
+
+        do_things().then((stuff) => {
+            twing.render('organic/list.twig', {
+                "app_name": config.app.name,
+                "result": stuff
+            }).then(output => res.end(output));
+        }).catch((err) => {
+            console.log(`${logging.prefix} ${logging.levels.err} ${err.trace}`)
+        })
+
+    })
 });
 
 router.get('/rxn/:rxnId', function(req, res) {
