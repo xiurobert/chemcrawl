@@ -6,37 +6,31 @@ const logging = require("../logging");
 const chalk = require("chalk");
 const mongo = require("mongodb");
 const multer = require("multer");
+const {GridFsStorage} = require("multer-gridfs-storage");
+const ash = require("express-async-handler")
 
-
-
-router.get('/login', (req, res) => {
-    twing.render('admin/login.twig', {
+router.get('/login', ash(async(req, res) => {
+    res.end(await twing.render('admin/login.twig', {
         "app_name": config.app.name
-    }).then(output => res.end(output));
-})
+    }));
+}));
 
-router.post('/login', (req, res) => {
-    mongo_client.connect().then(() => {
-        const db = mongo_client.db(config.db.name)
-        const coll = db.collection("admins");
-        coll.findOne({'username': req.body["username"]}).then(res => {
-            // res['password']
-            if (!res) {
-                // no user found
-                res.status = 400;
-                res.end('No such username');
-            } else {
-                bcrypt.compare(req.body["password"], res["password"]).then(result => {
-                    if (result) {
-                        req.session.loggedIn = true;
-                        req.session.userId = res["_id"];
-                        res.redirect('/admin/dashboard');
-                    }
-                })
-            }
-        })
-    })
-});
+router.post('/login', ash(async (req, res) => {
+    await mongo_client.connect();
+    const db = mongo_client.db(config.db.name);
+    const coll = db.collection("admins");
+    let result = coll.findOne({'username': req.body["username"]});
+    if (!res) {
+        res.status(400);
+        res.end('No such username')
+    } else {
+        if (await bcrypt.compare(req.body["password"], req["password"])) {
+            req.session.loggedIn = true;
+            req.session.userId = res['_id'];
+            res.redirect('/admin/dashboard');
+        }
+    }
+}));
 
 router.get('/dashboard', (req, res) => {
     res.end('dashboard');
@@ -49,6 +43,7 @@ router.get('/addrxn', (req, res) => {
 })
 
 router.post('/addrxn', (req, res) => {
+    // todo replace with async await
     let key = "";
 
     let data = {
@@ -86,6 +81,7 @@ router.post('/addrxn', (req, res) => {
 })
 
 router.get('/addexample/:type/:target_id', (req, res) => {
+    // todo replace with async await
     twing.render('admin/add_example.twig', {
         "app_name": config.app.name,
         "type": req.params['type'],
@@ -95,6 +91,7 @@ router.get('/addexample/:type/:target_id', (req, res) => {
 
 router.post('/addexample/:type/:target_id', multer({dest: `${__dirname}/../upload-tmp`}).single('file'),
     (req, res) => {
+
     let targetId;
     try {
         targetId = mongo.ObjectId(req.params['target_id']);
