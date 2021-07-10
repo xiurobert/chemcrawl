@@ -26,18 +26,20 @@ const client = new MongoClient(conf.db.uri, {
     useUnifiedTopology: true
 })
 
-// express setup
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-    secret: conf.app.sess_secret,
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-        client,
-        dbName: conf.db.name
-    })
-}))
-app.use('/public', express.static('public'));
+client.connect().then(r => {
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(session({
+        secret: conf.app.sess_secret,
+        resave: false,
+        saveUninitialized: true,
+        store: MongoStore.create({
+            client,
+            dbName: conf.db.name
+        })
+    }))
+    app.use('/public', express.static('public'));
+});
+
 
 module.exports = {
     app: app,
