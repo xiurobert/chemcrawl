@@ -36,7 +36,10 @@
                         <tr>
                             <th scope="col">Reaction Name</th>
                             <th scope="col">Reaction Type</th>
+                            <th scope="col">Reaction SubType</th>
                             <th scope="col">Mechanism Needed</th>
+                            <th scope="col">Reagents</th>
+                            <th scope="col">Conditions</th>
                             <th scope="col">View Reaction</th>
                         </tr>
                     </thead>
@@ -45,7 +48,24 @@
                         <tr>
                             <th>{{ rxn.name }}</th>
                             <th>{{ rxn.type }}</th>
+                            <th>{{ rxn.subType }}</th>
                             <th>{{ rxn.needsMech ? 'Yes' : 'No'}}</th>
+                            <th>
+                                <ul>
+                                    {% for reagent in rxn.reagents %}
+                                        <li>{{ reagent }}</li>
+                                    {% endfor %}
+                                </ul>
+
+                            </th>
+                            <th>
+                                <ul>
+                                    {% for cond in rxn.conditions %}
+                                        <li>{{ cond }}</li>
+                                    {% endfor %}
+                                </ul>
+
+                            </th>
                             <th>
                                 <button class="btn btn-success"
                                         onclick="window.open('/organic/rxn/{{ rxn['_id'] }}', '_blank')">
