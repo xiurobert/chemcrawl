@@ -1,0 +1,25 @@
+@use 'colors';
+
+.mode-dark {
+  background-color: colors.$dark-bg-color ;
+  main {
+    background-color: colors.$dark-bg-color;
+    color: colors.$light-bg-color;
+  }
+  pre {
+    background-color: #EBECE4;
+    display: inline;
+    padding: 0.75em;
+    border-radius: 10px;
+  }
+
+}
+
+.mode-light {
+  pre {
+    background-color: #EBECE4;
+    display: inline;
+    padding: 0.75em;
+    border-radius: 10px;
+  }
+}

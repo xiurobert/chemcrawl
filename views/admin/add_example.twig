@@ -1,0 +1,41 @@
+{% extends 'includes/layout.twig' %}
+{% set selected = 'admin_addexample' %}
+{% set mode = 'light' %}
+{% set title = 'Add Example' %}
+
+{% block head %}
+    <link rel="stylesheet" href="/public/styles/add_example.min.css">
+    <link rel="stylesheet" href="/public/styles/dropzone.min.css">
+    <script src="/public/scripts/dropzone.min.js"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col">
+                <h1 class="text-center">Add example</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <span>Target: </span> <pre>{{ type }}/{{ target_id }}</pre>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <form action="/admin/addexample/{{ type }}/{{ target_id }}" class="dropzone" id="upload" enctype="multipart/form-data">
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        Dropzone.options.upload = {
+            maxFilesize: 10,
+
+        }
+    </script>
+{% endblock %}
