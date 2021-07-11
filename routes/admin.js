@@ -5,9 +5,11 @@ const mongo = require("mongodb");
 const multer = require("multer");
 const {GridFsStorage} = require("multer-gridfs-storage");
 const ash = require("express-async-handler");
+const bodyParser = require("body-parser");
 
 const logging = require("../logging");
 const {twing, config, mongo_client, db} = require("../bruh");
+const {requires_admin} = require("../middleware/requires_admin");
 
 
 const router = express.Router();
@@ -23,24 +25,28 @@ router.get('/login', ash(async(req, res) => {
     }));
 }));
 
-router.post('/login', ash(async (req, res) => {
+router.post('/login', bodyParser.urlencoded({ extended: true }),
+    ash(async (req, res) => {
     await mongo_client.connect();
     const db = mongo_client.db(config.db.name);
     const coll = db.collection("admins");
-    let result = coll.findOne({'username': req.body["username"]});
-    if (!res) {
+    let result = await coll.findOne({'username': req.body["username"]});
+    if (!result) {
         res.status(400);
-        res.end('No such username')
+        res.end('No such username');
     } else {
-        if (await bcrypt.compare(req.body["password"], req["password"])) {
+        console.log(`${logging.prefix} ${logging.levels.debug} User logging in: ${req.body["username"]}`);
+        if (await bcrypt.compare(req.body["password"], result["password"])) {
             req.session.loggedIn = true;
             req.session.userId = res['_id'];
+            req.session.isAdmin = true;
+            console.log(`${logging.prefix} ${logging.levels.debug} Logged in user: ${req.body["username"]}`);
             res.redirect('/admin/dashboard');
         }
     }
 }));
 
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', requires_admin, (req, res) => {
     res.end('dashboard');
 });
 
@@ -139,5 +145,28 @@ router.post('/addexample/:type/:target_id', upload.single('file'),
         }
 
     }));
+/*
+router.get('/readexample/:fileId', ash(
+    async(req, res) => {
+        await mongo_client.connect();
+        const db = mongo_client.db(config.db.name);
+        const grid = new mongo.GridFSBucket(db);
+
+        const file_cur = await grid.find({'_id': mongo.ObjectId(req.params['fileId'])});
+        const count = await file_cur.count();
+
+
+        if (count === 1) {
+            const the_file = await file_cur.next();
+            const dlStr = grid.openDownloadStream(the_file['_id']);
+            // res.set({
+            //     'Content-Type': the_file.contentType,
+            //     'Content-Disposition': 'attachment; filename=' + the_file.filename
+            // });
+            dlStr.pipe(res);
+        }
+
+}));
+*/
 
 module.exports = router;
