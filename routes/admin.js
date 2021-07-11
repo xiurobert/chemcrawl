@@ -103,7 +103,8 @@ router.post('/addexample/:type/:target_id', upload.single('file'),
         try {
             targetId = mongo.ObjectId(req.params['target_id']);
         } catch {
-            console.log(`${logging.prefix} ${logging.levels.warn} Someone just tried to access an invalid objectid: ${req.params['target_id']}`);
+            console.log(`${logging.prefix} ${logging.levels.warn} Invalid OID submitted: ${req.params['target_id']}`);
+            res.status(400)
             res.end("That is not a valid objectid");
         }
         await mongo_client.connect();
@@ -111,12 +112,12 @@ router.post('/addexample/:type/:target_id', upload.single('file'),
         const coll = db.collection('organic_reactions');
 
 
-
         if (req.params['type'].toLowerCase() === 'organic') {
             console.log(`${logging.prefix} ${logging.levels.debug} File ObjectID: ${req.file.id}`)
             let target = await coll.findOne({'_id': targetId});
 
             if (!target) {
+                res.status(404)
                 res.end('That object does not exist');
             } else {
                 const result = await coll.updateOne({'_id': targetId}, {
@@ -130,6 +131,9 @@ router.post('/addexample/:type/:target_id', upload.single('file'),
                 console.log(`${logging.prefix} ${logging.levels.debug} Updated: ${result.upsertedCount}`)
                 res.end('Updated some documents');
             }
+        } else {
+            res.status(400);
+            res.end("Not supported");
         }
 
     }));
