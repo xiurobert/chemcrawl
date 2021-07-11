@@ -1,19 +1,21 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const {twing, config, mongo_client, db} = require("../bruh");
-const router = express.Router();
-const logging = require("../logging");
 const chalk = require("chalk");
 const mongo = require("mongodb");
 const multer = require("multer");
 const {GridFsStorage} = require("multer-gridfs-storage");
-const ash = require("express-async-handler")
+const ash = require("express-async-handler");
 
+const logging = require("../logging");
+const {twing, config, mongo_client, db} = require("../bruh");
+
+
+const router = express.Router();
 const storage = new GridFsStorage({
     url: `${config.db.uri}/${config.db.name}`
 });
-
 const upload = multer({ storage });
+
 
 router.get('/login', ash(async(req, res) => {
     res.end(await twing.render('admin/login.twig', {
