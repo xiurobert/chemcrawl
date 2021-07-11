@@ -9,6 +9,12 @@ const multer = require("multer");
 const {GridFsStorage} = require("multer-gridfs-storage");
 const ash = require("express-async-handler")
 
+const storage = new GridFsStorage({
+    url: `${config.db.uri}/${config.db.name}`
+});
+
+const upload = multer({ storage });
+
 router.get('/login', ash(async(req, res) => {
     res.end(await twing.render('admin/login.twig', {
         "app_name": config.app.name
@@ -34,13 +40,13 @@ router.post('/login', ash(async (req, res) => {
 
 router.get('/dashboard', (req, res) => {
     res.end('dashboard');
-})
+});
 
 router.get('/addrxn', (req, res) => {
     twing.render('admin/add_rxn.twig', {
         "app_name": config.app.name
     }).then(output => res.end(output));
-})
+});
 
 router.post('/addrxn', (req, res) => {
     // todo replace with async await
@@ -75,37 +81,57 @@ router.post('/addrxn', (req, res) => {
                 `${logging.prefix} ${logging.comp.db} Created ORG_RXN ${chalk.greenBright(result.insertedId)}`);
             res.redirect(`/organic/rxn/${result.insertedId}`);
         })
-        
+
     })
 
-})
+});
 
-router.get('/addexample/:type/:target_id', (req, res) => {
-    // todo replace with async await
-    twing.render('admin/add_example.twig', {
-        "app_name": config.app.name,
-        "type": req.params['type'],
-        "target_id": req.params['target_id']
-    }).then(output => res.end(output));
-})
-
-router.post('/addexample/:type/:target_id', multer({dest: `${__dirname}/../upload-tmp`}).single('file'),
+router.get('/addexample/:type/:target_id',
     (req, res) => {
+        // todo replace with async await
+        twing.render('admin/add_example.twig', {
+            "app_name": config.app.name,
+            "type": req.params['type'],
+            "target_id": req.params['target_id']
+        }).then(output => res.end(output));
+    });
 
-    let targetId;
-    try {
-        targetId = mongo.ObjectId(req.params['target_id']);
-    } catch {
-        console.log(`${logging.prefix} ${logging.levels.warn} Someone just tried to access an invalid objectid: ${req.params['rxnId']}`);
-        res.end("That is not a valid objectid");
-    }
-    mongo_client.connect().then(() => {
-        const db = mongo_client.db(config.db.name);
-        if (req.params['type'].toLowerCase() === 'organic') {
+router.post('/addexample/:type/:target_id', upload.single('file'),
+    ash(async(req, res) => {
 
+        let targetId;
+        try {
+            targetId = mongo.ObjectId(req.params['target_id']);
+        } catch {
+            console.log(`${logging.prefix} ${logging.levels.warn} Someone just tried to access an invalid objectid: ${req.params['target_id']}`);
+            res.end("That is not a valid objectid");
         }
-    })
+        await mongo_client.connect();
+        const db = mongo_client.db(config.db.name);
+        const coll = db.collection('organic_reactions');
 
-})
+
+
+        if (req.params['type'].toLowerCase() === 'organic') {
+            console.log(`${logging.prefix} ${logging.levels.debug} File ObjectID: ${req.file.id}`)
+            let target = await coll.findOne({'_id': targetId});
+
+            if (!target) {
+                res.end('That object does not exist');
+            } else {
+                const result = await coll.updateOne({'_id': targetId}, {
+                    $addToSet: {
+                        examples: [{
+                            'fileId': req.file.id,
+                            'contentType': req.file.contentType
+                        }]
+                    }
+                });
+                console.log(`${logging.prefix} ${logging.levels.debug} Updated: ${result.upsertedCount}`)
+                res.end('Updated some documents');
+            }
+        }
+
+    }));
 
 module.exports = router;

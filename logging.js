@@ -9,6 +9,7 @@ module.exports = {
     levels : {
         warn: chalk.yellowBright('WARNING'),
         err: chalk.redBright('ERROR'),
-        info: chalk.cyan('INFO')
+        info: chalk.cyan('INFO'),
+        debug: chalk.gray('DEBUG')
     }
 };
