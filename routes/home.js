@@ -36,7 +36,7 @@ async(req, res) => {
         if (the_file.contentType.startsWith("text")) {
             res.set({
                 'Content-Type': 'text/plain; charset=UTF-8'
-            })
+            });
         } else {
             res.set({
                 'Content-Type': the_file.contentType,
