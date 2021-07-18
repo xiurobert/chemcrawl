@@ -155,14 +155,14 @@ router.post('/addexample/:type/:target_id', upload.single('file'),
             } else {
                 const result = await coll.updateOne({'_id': targetId}, {
                     $addToSet: {
-                        examples: [{
+                        examples: {
                             'fileId': req.file.id,
                             'contentType': req.file.contentType
-                        }]
+                        }
                     }
                 });
-                console.log(`${logging.prefix} ${logging.levels.debug} Updated: ${result.upsertedCount}`)
-                res.end('Updated some documents');
+                console.log(`${logging.prefix} ${logging.levels.debug} Updated: ${result.modifiedCount}`)
+                res.status(200).end('Added the example');
             }
         } else {
             res.status(400);
