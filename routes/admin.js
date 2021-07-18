@@ -8,15 +8,40 @@ const ash = require("express-async-handler");
 const bodyParser = require("body-parser");
 
 const logging = require("../logging");
+const path = require("path");
 const {twing, config, mongo_client, db} = require("../bruh");
 const {requires_admin} = require("../middleware/requires_admin");
 
 
 const router = express.Router();
 const storage = new GridFsStorage({
-    url: `${config.db.uri}/${config.db.name}`
+    url: `${config.db.uri}/${config.db.name}`,
 });
-const upload = multer({ storage });
+const upload = multer({
+    storage: storage,
+    fileFilter: (_req, file, cb) => {
+        const allowed_ExtensionsAndMimeTypes = {
+            ".png": "image/png",
+            ".svg": "image/svg+xml",
+            ".jpeg": "image/jpeg",
+            ".jpg": "image/jpg",
+            ".gif": "image/gif",
+            ".md": "text/markdown",
+            ".txt": "text/plain",
+            ".pdf": "application/pdf",
+            ".mp4": "video/mp4"
+        }
+        // this monstrosity just compares the extensions and mimetypes and ensure the user is not lying and trying to upload a virus or something
+        if (
+            Object.keys(allowed_ExtensionsAndMimeTypes).includes(path.extname(file.originalname).toLowerCase())
+            && allowed_ExtensionsAndMimeTypes[path.extname(file.originalname).toLowerCase()] === file.mimetype.toLowerCase()
+        ) {
+            return cb(null, true);
+        } else {
+            cb("Error: File was not in the allowed list of file types");
+        }
+    }
+});
 
 
 router.get('/login', ash(async(req, res) => {

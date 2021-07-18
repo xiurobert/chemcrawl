@@ -5,6 +5,7 @@ const {MongoClient} = require("mongodb");
 const {TwingEnvironment, TwingLoaderFilesystem} = require('twing');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const logging = require("./logging");
 
 let twing;
 
@@ -41,6 +42,13 @@ app.use(session({
     })
 }))
 app.use('/public', express.static('public'));
+
+// errors
+
+app.use((err, req, res, next)  => {
+    console.error(`${logging.prefix} ${logging.levels.err} ${err.stack}`);
+    // res.send(err.body);
+})
 
 
 module.exports = {
