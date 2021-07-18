@@ -154,15 +154,48 @@
         </div>
         <div class="row mt-5">
             <div class="col">
-                {% for eg in result["examples"] %}
-                    {% if eg.contentType == "application/pdf" %}
-                    <iframe src="/read-example/{{ eg.fileId }}" width="100%" height="250px">
+                {# number of cols per row #}
+                {% set ncpr = 2 %}
 
-                    </iframe>
-                    {% elseif eg.contentType starts with 'image' %}
-                    <img src="/read-example/{{ eg.fileId }}" width="100%">
-                    {% elseif eg.contentType starts with 'text' %}
-                    {% endif %}
+                {# ignore the math, holy shit it makes my brain hurt (it doesnt but ignore it anyway) #}
+                {#
+                    Magic var 1: Creates iterator to create ceil(ncpr/3) rows
+                    E.g. if you have 5 rows, and ncpr=2 it creates ceil(5/2) = 3 rows
+
+                    Magic var 2 -> result["examples"]|slice(i * ncpr, ncpr)|length
+                    Magic var 2: How many objects there are in a row
+                    Used to pad if there is only 1 object in that row
+                #}
+                {% set magic_var_1 = (result["examples"]|length / ncpr)|round(0, 'ceil') - 1 %}
+                {% for i in range(0, magic_var_1) %}
+                    <div class="row">
+                        {% for eg in result["examples"]|slice(i * ncpr, ncpr) %}
+                            {% if result["examples"]|slice(i * ncpr, ncpr)|length == 1 %}
+                                <dsiv class="col-lg-2"></dsiv>
+                            {% endif %}
+                            <div class="col-lg{% if result["examples"]|slice(i * ncpr, ncpr)|length == 1 %}-8{% endif %}">
+                                {% if eg.contentType == "application/pdf" %}
+                                    <iframe src="/read-example/{{ eg.fileId }}" width="100%" height="250px">
+
+                                    </iframe>
+                                {% elseif eg.contentType starts with 'image' %}
+                                    <img src="/read-example/{{ eg.fileId }}" width="100%">
+                                {% elseif eg.contentType starts with 'text' %}
+                                    <iframe src="/read-example/{{ eg.fileId }}" width="100%" height="250px">
+
+                                    </iframe>
+                                {% else %}
+                                    <iframe src="/read-example/{{ eg.fileId }}" width="100%" height="250px">
+
+                                    </iframe>
+                                {% endif %}
+                            </div>
+                            {% if result["examples"]|slice(i * ncpr, ncpr)|length == 1 %}
+                                <div class="col-lg-2"></div>
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
                 {% endfor %}
             </div>
         </div>
