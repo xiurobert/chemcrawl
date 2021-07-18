@@ -4,6 +4,7 @@ const router = express.Router();
 const ash = require("express-async-handler");
 const mongo = require("mongodb");
 const {mongo_client} = require("../bruh");
+const md = require('markdown-it')();
 
 router.get('/', ash(async (req, res) => {
     res.end(await twing.render('index.twig', {
@@ -19,7 +20,43 @@ router.post('/suggest', function (req, res) {
 
 });
 
-router.get('/parse-markdown/:fileId');
+router.get('/read-markdown/:fileId', ash(async(req, res) => {
+    function streamToString (stream) {
+        const chunks = [];
+        return new Promise((resolve, reject) => {
+            stream.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
+            stream.on('error', (err) => reject(err));
+            stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+        })
+    }
+
+    await mongo_client.connect();
+    const db = mongo_client.db(config.db.name);
+    const grid = new mongo.GridFSBucket(db);
+
+    const file_cur = await grid.find({'_id': mongo.ObjectId(req.params['fileId'])});
+    const count = await file_cur.count();
+
+
+    if (count === 1) {
+        const the_file = await file_cur.next();
+        const dlStr = grid.openDownloadStream(the_file['_id']);
+        if (the_file.contentType === 'text/markdown') {
+            res.set({
+                'Content-Type': 'text/html; charset=UTF-8'
+            });
+            const markdown = await streamToString(dlStr);
+            res.send(md.render(markdown));
+
+        } else {
+            res.status(400).end("Example is not markdown")
+        }
+
+    } else {
+        res.status(404).end("Example not found");
+    }
+
+}));
 
 
 router.get('/read-example/:fileId', ash(
