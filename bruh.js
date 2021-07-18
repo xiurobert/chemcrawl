@@ -50,6 +50,7 @@ app.use((err, req, res, next)  => {
     // res.send(err.body);
 })
 
+// TODO: apparently we should be passing a connection around instead of the client
 
 module.exports = {
     app: app,

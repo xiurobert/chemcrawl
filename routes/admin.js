@@ -170,28 +170,5 @@ router.post('/addexample/:type/:target_id', upload.single('file'),
         }
 
     }));
-/*
-router.get('/readexample/:fileId', ash(
-    async(req, res) => {
-        await mongo_client.connect();
-        const db = mongo_client.db(config.db.name);
-        const grid = new mongo.GridFSBucket(db);
-
-        const file_cur = await grid.find({'_id': mongo.ObjectId(req.params['fileId'])});
-        const count = await file_cur.count();
-
-
-        if (count === 1) {
-            const the_file = await file_cur.next();
-            const dlStr = grid.openDownloadStream(the_file['_id']);
-            // res.set({
-            //     'Content-Type': the_file.contentType,
-            //     'Content-Disposition': 'attachment; filename=' + the_file.filename
-            // });
-            dlStr.pipe(res);
-        }
-
-}));
-*/
 
 module.exports = router;

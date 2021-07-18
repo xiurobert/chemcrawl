@@ -23,7 +23,12 @@ router.get('/rxn/:rxnId', ash(async(req, res) => {
         res.end("That is not a valid objectid")
     }
     await mongo_client.connect();
-    const coll = mongo_client.db(config.db.name).collection('organic_reactions');
+    const db = mongo_client.db(config.db.name);
+    const coll = db.collection('organic_reactions');
+    const grid = new mongo.GridFSBucket(db);
+
+
+
     res.end(await twing.render('organic/rxn_info.twig', {
         "app_name": config.app.name,
         "result": await coll.findOne({'_id': rxnId})
