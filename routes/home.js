@@ -19,6 +19,8 @@ router.post('/suggest', function (req, res) {
 
 });
 
+router.get('/parse-markdown/:fileId');
+
 
 router.get('/read-example/:fileId', ash(
 async(req, res) => {
