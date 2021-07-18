@@ -25,18 +25,18 @@
             <div class="col-sm">
                 <div class="row">
                     <div class="col-md-8 text-center align-self-center">
-                        <label for="rxnReagents-0" class="form-label">Reaction Reagents</label>
+                        <label for="testReagents-0" class="form-label">Test Reagents</label>
                     </div>
                     <div class="col-md-4 p-3 text-center">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnReagents')">+</button>
-                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnReagents')">-</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('testReagents')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('testReagents')">-</button>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col" id="reagentsList">
-                        <input type="text" class="form-control mb-2" id="rxnReagents-0" name="rxnReagents-0"
+                        <input type="text" class="form-control mb-2" id="testReagents-0" name="testReagents-0"
                                placeholder="Reaction reagent">
                     </div>
                 </div>
@@ -45,19 +45,19 @@
             <div class="col-sm">
                 <div class="row">
                     <div class="col-md-8 text-center align-self-center">
-                        <label for="rxnConditions-0" class="form-label">Reaction Conditions</label>
+                        <label for="testConditions-0" class="form-label">Test Conditions</label>
                     </div>
                     <div class="col-md-4 p-3 text-center">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnConditions')">+</button>
-                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnConditions')">-</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('testConditions')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('testConditions')">-</button>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col" id="conditionsList">
-                        <input type="text" class="form-control mb-2" id="rxnConditions-0" name="rxnConditions-0"
-                               placeholder="Reaction condition">
+                        <input type="text" class="form-control mb-2" id="testConditions-0" name="testConditions-0"
+                               placeholder="Test condition">
                     </div>
                 </div>
 
@@ -67,18 +67,18 @@
             <div class="col-lg">
                 <div class="row">
                     <div class="col-md-8 text-center align-self-center">
-                        <label for="rxnReactants-0" class="form-label">Reactants</label>
+                        <label for="testReactants-0" class="form-label">Reactants</label>
                     </div>
                     <div class="col-md-4 p-3 text-center">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnReactants')">+</button>
-                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnReactants')">-</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('testReactants')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('testReactants')">-</button>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col" id="reagentsList">
-                        <input type="text" class="form-control mb-2" id="rxnReactants-0" name="rxnReactants-0"
+                        <input type="text" class="form-control mb-2" id="testReactants-0" name="testReactants-0"
                                placeholder="Reactant">
                     </div>
                 </div>
@@ -86,18 +86,18 @@
             <div class="col-lg">
                 <div class="row">
                     <div class="col-md-8 text-center align-self-center">
-                        <label for="rxnProducts-0">Products</label>
+                        <label for="testProducts-0">Products</label>
                     </div>
                     <div class="col-md-4 p-3 text-center">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnProducts')">+</button>
-                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnProducts')">-</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('testProducts')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('testProducts')">-</button>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col" id="reagentsList">
-                        <input type="text" class="form-control mb-2" id="rxnProducts-0" name="rxnProducts-0"
+                        <input type="text" class="form-control mb-2" id="testProducts-0" name="testProducts-0"
                                placeholder="Product">
                     </div>
                 </div>
@@ -105,12 +105,12 @@
         </div>
         <div class="row">
             <div class="col-lg">
-                <label for="testPlusVe" class="form-label">Positive Outcome</label>
-                <input type="text" class="form-control" id="testPlusVe" name="testPlusVe" placeholder="Positive Outcome">
+                <label for="positiveOutcome" class="form-label">Positive Outcome</label>
+                <input type="text" class="form-control" id="positiveOutcome" name="positiveOutcome" placeholder="Positive Outcome">
             </div>
             <div class="col-lg">
-                <label for="testNegVe" class="form-label">Negative Outcome</label>
-                <input type="text" class="form-control" id="testNegVe" name="testNegVe" placeholder="Negative Outcome">
+                <label for="negativeOutcome" class="form-label">Negative Outcome</label>
+                <input type="text" class="form-control" id="negativeOutcome" name="negativeOutcome" placeholder="Negative Outcome">
             </div>
         </div>
         <div class="row mt-5">
