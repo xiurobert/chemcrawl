@@ -15,18 +15,44 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <h5 class="text-left" style="display: inline">Sort order > </h5>
+            <div class="col-md-8">
+                <h5 class="text-left" style="display: inline">Sort criteria > </h5>
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-primary">Alphabetical</button>
-                    <button type="button" class="btn btn-primary">Type of reaction</button>
-                    <button type="button" class="btn btn-primary">Reagents</button>
-                    <button type="button" class="btn btn-primary">Conditions</button>
-                </div>
-            </div>
-            <div class="col text-left">
+                    <input type="radio" class="btn-check" name="btnradio" id="rxnName-sort" autocomplete="off"
+                           {% if sortBy == "abc" %}checked{% endif %}
+                           onclick="window.location.href = '/organic/rxn-list/abc-{{ sortOrder }}'">
+                    <label class="btn btn-outline-primary" for="rxnName-sort">Name</label>
 
+                    <input type="radio" class="btn-check" name="btnradio" id="rxnType-sort" autocomplete="off"
+                           {% if sortBy == "type" %}checked{% endif %}
+                           onclick="window.location.href = '/organic/rxn-list/type-{{ sortOrder }}'">
+                    <label class="btn btn-outline-primary" for="rxnType-sort">Type</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="rxnReagent-sort" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="rxnReagent-sort">Reagent</label>
+                </div>
+{#                <div class="btn-group" role="group">#}
+{#                    <button type="button" class="btn btn-primary">Alphabetical</button>#}
+{#                    <button type="button" class="btn btn-primary">Type of reaction</button>#}
+{#                    <button type="button" class="btn btn-primary">Reagents</button>#}
+{#                    <button type="button" class="btn btn-primary">Conditions</button>#}
+{#                </div>#}
             </div>
+            <div class="col-md-4">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="btnradio1" id="sort-asc" autocomplete="off"
+                           {% if sortOrder == "asc" %}checked{% endif %}
+                           onclick="window.location.href = '/organic/rxn-list/{{ sortBy }}-asc'">
+                    <label class="btn btn-outline-primary" for="sort-asc">Asc</label>
+
+                    <input type="radio" class="btn-check" name="btnradio1" id="sort-dsc" autocomplete="off"
+                           {% if sortOrder == "dsc" %}checked{% endif %}
+                           onclick="window.location.href = '/organic/rxn-list/{{ sortBy }}-dsc'">
+                    <label class="btn btn-outline-primary" for="sort-dsc">Desc</label>
+                </div>
+                <h5 class="text-right" style="display: inline">Sort Order</h5>
+            </div>
+
         </div>
         <div class="row">
 

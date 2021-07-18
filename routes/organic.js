@@ -6,19 +6,19 @@ const logging = require('../logging');
 const ash = require("express-async-handler")
 
 router.get('/rxn-list/:sortBy-:sortOrder',  ash(async(req, res) => {
-    const sortBy = req.params["sortBy"];
-    const sortOrder = req.params["sortOrder"];
+    const sortBy = req.params["sortBy"].toLowerCase();
+    const sortOrder = req.params["sortOrder"].toLowerCase();
 
     const hack = {
         "asc": 1,
         "dsc": -1
     }
 
-    if (!["abc", "type", "reagents", "conditions"].includes(sortBy.toLowerCase())) {
+    if (!["abc", "type", "reagents", "conditions"].includes(sortBy)) {
         res.status(400).end("Invalid sort criterion");
     }
 
-    if (!["asc", "dsc"].includes(sortOrder.toLowerCase())) {
+    if (!["asc", "dsc"].includes(sortOrder)) {
         res.status(400).end("Invalid sort order");
     }
 
@@ -27,12 +27,22 @@ router.get('/rxn-list/:sortBy-:sortOrder',  ash(async(req, res) => {
 
     let all_da_stuff = await coll.find();
     let dae_return;
-    if (sortBy.toLowerCase() === 'abc') {
-        dae_return = all_da_stuff.sort({name: -1}).toArray();
+    if (sortBy === 'abc') {
+        dae_return = await all_da_stuff.sort({name: hack[sortOrder.toLowerCase()]}).toArray();
+    } else if (sortBy === 'type') {
+        dae_return = await all_da_stuff.sort({type: hack[sortOrder.toLowerCase()]}).toArray();
+    } else if (sortBy === 'reagents')  {
+        // TODO: this is kind of complex
+        dae_return = await all_da_stuff.toArray();
+    } else if (sortBy === 'conditions') {
+        // TODO: same here
+        dae_return = await all_da_stuff.toArray();
     }
     res.end(await twing.render('organic/list.twig', {
         "app_name": config.app.name,
-        "result": dae_return
+        "result": dae_return,
+        "sortBy": sortBy,
+        "sortOrder": sortOrder
     }));
 }));
 
