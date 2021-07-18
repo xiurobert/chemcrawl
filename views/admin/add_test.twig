@@ -1,0 +1,142 @@
+{% extends 'includes/layout.twig' %}
+{% set selected = 'admin_addtest' %}
+{% set mode = 'dark' %}
+{% set title = 'Add Test' %}
+
+{% block head %}
+
+
+{% endblock %}
+
+{% block main %}
+    <form class="container" action="/admin/add-test" method="post">
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="mt-5">Add Test</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="testName" class="form-label">Test Name</label>
+                <input type="text" class="form-control" id="testName" name="testName" placeholder="Test name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <div class="row">
+                    <div class="col-md-8 text-center align-self-center">
+                        <label for="rxnReagents-0" class="form-label">Reaction Reagents</label>
+                    </div>
+                    <div class="col-md-4 p-3 text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnReagents')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnReagents')">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="reagentsList">
+                        <input type="text" class="form-control mb-2" id="rxnReagents-0" name="rxnReagents-0"
+                               placeholder="Reaction reagent">
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm">
+                <div class="row">
+                    <div class="col-md-8 text-center align-self-center">
+                        <label for="rxnConditions-0" class="form-label">Reaction Conditions</label>
+                    </div>
+                    <div class="col-md-4 p-3 text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnConditions')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnConditions')">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="conditionsList">
+                        <input type="text" class="form-control mb-2" id="rxnConditions-0" name="rxnConditions-0"
+                               placeholder="Reaction condition">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg">
+                <div class="row">
+                    <div class="col-md-8 text-center align-self-center">
+                        <label for="rxnReactants-0" class="form-label">Reactants</label>
+                    </div>
+                    <div class="col-md-4 p-3 text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnReactants')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnReactants')">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="reagentsList">
+                        <input type="text" class="form-control mb-2" id="rxnReactants-0" name="rxnReactants-0"
+                               placeholder="Reactant">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="row">
+                    <div class="col-md-8 text-center align-self-center">
+                        <label for="rxnProducts-0">Products</label>
+                    </div>
+                    <div class="col-md-4 p-3 text-center">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-{{ mode }}" type="button" onclick="clone('rxnProducts')">+</button>
+                            <button class="btn btn-{{ mode }}" type="button" onclick="delLast('rxnProducts')">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="reagentsList">
+                        <input type="text" class="form-control mb-2" id="rxnProducts-0" name="rxnProducts-0"
+                               placeholder="Product">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg">
+                <label for="testPlusVe" class="form-label">Positive Outcome</label>
+                <input type="text" class="form-control" id="testPlusVe" name="testPlusVe" placeholder="Positive Outcome">
+            </div>
+            <div class="col-lg">
+                <label for="testNegVe" class="form-label">Negative Outcome</label>
+                <input type="text" class="form-control" id="testNegVe" name="testNegVe" placeholder="Negative Outcome">
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function clone(startingIdOfInputToClone) {
+            let $da_thing = $(`input[id^=${startingIdOfInputToClone}]:last`);
+            let num = parseInt($da_thing.prop("id").match(/\d+/g), 10) +1;
+            let $clone = $da_thing.clone().prop('id', `${startingIdOfInputToClone}-${num}`);
+            $clone.prop('name', `${startingIdOfInputToClone}-${num}`)
+            $da_thing.after($clone);
+        }
+
+        function delLast(startingIdOfInputToDel) {
+            let $dae = $(`input[id^=${startingIdOfInputToDel}]`).last();
+            if ($dae.parent().children().length > 1) {
+                $dae.remove();
+            }
+        }
+
+    </script>
+{% endblock %}

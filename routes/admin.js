@@ -82,6 +82,12 @@ router.get('/addrxn', (req, res) => {
     }).then(output => res.end(output));
 });
 
+router.get('/add-test', ash(async(req, res) => {
+    res.end(await twing.render('admin/add_test.twig', {
+        "app_name": config.app.name
+    }));
+}));
+
 router.post('/addrxn', (req, res) => {
     // todo replace with async await
     let key = "";
