@@ -151,12 +151,27 @@
                     </div>
                 </div>
             </div>
-        </div>'
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                {% for eg in result["examples"] %}
+                    {% if eg.contentType == "application/pdf" %}
+                    <iframe src="/read-example/{{ eg.fileId }}" width="100%" height="250px">
+
+                    </iframe>
+                    {% elseif eg.contentType starts with 'image' %}
+                    <img src="/read-example/{{ eg.fileId }}" width="100%">
+                    {% elseif eg.contentType starts with 'text' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
         <div class="row mt-5">
             <div class="col text-center">
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-success">Edit</button>
-                    <button type="button" class="btn btn-info">Add example</button>
+                    <button type="button" class="btn btn-info"
+                            onclick="window.open('/admin/addexample/organic/{{ result['_id'] }}')">Add example</button>
                     <button type="button" class="btn btn-warning">Add mechanism</button>
                     <button type="button" class="btn btn-danger">Delete</button>
                 </div>

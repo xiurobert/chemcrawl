@@ -33,11 +33,18 @@ async(req, res) => {
     if (count === 1) {
         const the_file = await file_cur.next();
         const dlStr = grid.openDownloadStream(the_file['_id']);
-        res.set({
-            'Content-Type': the_file.contentType,
-            'Content-Disposition': 'inline'
-        });
+        if (the_file.contentType.startsWith("text")) {
+            res.set({
+                'Content-Type': 'text/plain; charset=UTF-8'
+            })
+        } else {
+            res.set({
+                'Content-Type': the_file.contentType,
+                'Content-Disposition': 'inline'
+            });
+        }
         dlStr.pipe(res);
+
     } else {
         res.status(404).end("Example not found");
     }

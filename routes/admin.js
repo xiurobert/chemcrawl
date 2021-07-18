@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const chalk = require("chalk");
 const mongo = require("mongodb");
+const {ObjectId} = require("mongodb")
 const multer = require("multer");
 const {GridFsStorage} = require("multer-gridfs-storage");
 const ash = require("express-async-handler");
@@ -134,7 +135,7 @@ router.post('/addexample/:type/:target_id', upload.single('file'),
 
         let targetId;
         try {
-            targetId = mongo.ObjectId(req.params['target_id']);
+            targetId = ObjectId(req.params['target_id']);
         } catch {
             console.log(`${logging.prefix} ${logging.levels.warn} Invalid OID submitted: ${req.params['target_id']}`);
             res.status(400)
