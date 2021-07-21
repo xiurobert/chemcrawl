@@ -9,7 +9,7 @@ app.use(nocache());
 app.use('/', require("./routes/home"));
 app.use('/organic', require("./routes/organic"))
 app.use('/admin', require("./routes/admin"));
-
+app.use('/test', require("./routes/distinguishing_tests"));
 
 app.listen(conf.server.port, () => {
     if (process.env.NODE_ENV === 'development') {

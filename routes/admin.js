@@ -127,7 +127,7 @@ router.get('/add-test', ash(async(req, res) => {
 }));
 router.post('/add-test', ash(async(req, res) => {
     let data = {
-        name: req.body["rxnName"],
+        name: req.body["testName"],
         conditions: [],
         reagents: [],
         reactants: [],
@@ -148,6 +148,14 @@ router.post('/add-test', ash(async(req, res) => {
             data.products.push(req.body[key]);
         }
     }
+
+    await mongo_client.connect();
+    const db = mongo_client.db(config.db.name);
+    const coll = db.collection('distinguishing_tests');
+
+    let result = await coll.insertOne(data);
+    console.log(`${logging.prefix} ${logging.comp.db} Created D_TEST ${chalk.greenBright(result.insertedId)}`);
+    res.redirect(`/test/${result.insertedId}`);
 }))
 
 router.get('/addexample/:type/:target_id',

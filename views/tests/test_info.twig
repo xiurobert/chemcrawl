@@ -1,0 +1,187 @@
+{% extends 'includes/layout.twig' %}
+{% set selected = 'test_info' %}
+{% set mode = 'light' %}
+{% set title = 'Reaction Info' %}
+
+{% block head %}
+    <link rel="stylesheet" href="/public/styles/rxn_info.min.css">
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col text-center">
+                <h1>Test: <b>{{ result["name"] }}</b></h1>
+                <span>Test ID: </span><pre>{{ result['_id'] }}</pre>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body fw-bold">
+                        <h5 class="card-title text-center">Reagents</h5>
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <table class="table table-bordered text-center">
+                                        <tbody>
+                                        {% for reagent in result['reagents'] %}
+                                            <tr>
+                                                <td>{{ reagent }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body fw-bold">
+                        <h5 class="card-title text-center">Conditions</h5>
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <table class="table table-bordered text-center">
+                                        <tbody>
+                                        {% for condition in result['conditions'] %}
+                                            <tr>
+                                                <td>{{ condition }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md">
+                <div class="col-md">
+                    <div class="card">
+                        <div class="card-body fw-bold">
+                            <h5 class="card-title text-center">Reactants</h5>
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-6">
+                                        <table class="table table-bordered text-center">
+                                            <tbody>
+                                            {% for reactants in result['reactants'] %}
+                                                <tr>
+                                                    <td>{{ reactants }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body fw-bold">
+                        <h5 class="card-title text-center">Products</h5>
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <table class="table table-bordered text-center">
+                                        <tbody>
+                                        {% for product in result['products'] %}
+                                            <tr>
+                                                <td>{{ product }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <h3>Examples</h3>
+            </div>
+        </div>
+        <div class="row mt-1 example-box">
+            <div class="col">
+                {# number of cols per row #}
+                {% set ncpr = 2 %}
+
+                {# ignore the math, holy shit it makes my brain hurt (it doesnt but ignore it anyway) #}
+                {#
+                    Magic var 1: Creates iterator to create ceil(ncpr/3) rows
+                    E.g. if you have 5 rows, and ncpr=2 it creates ceil(5/2) = 3 rows
+
+                    Magic var 2 -> result["examples"]|slice(i * ncpr, ncpr)|length
+                    Magic var 2: How many objects there are in a row
+                    Used to pad if there is only 1 object in that row
+                #}
+                {% set magic_var_1 = (result["examples"]|length / ncpr)|round(0, 'ceil') - 1 %}
+                {% for i in range(0, magic_var_1) %}
+                    <div class="row">
+                        {% for eg in result["examples"]|slice(i * ncpr, ncpr) %}
+                            {% if result["examples"]|slice(i * ncpr, ncpr)|length == 1 %}
+                                <dsiv class="col-lg-2"></dsiv>
+                            {% endif %}
+                            <div class="col-lg{% if result["examples"]|slice(i * ncpr, ncpr)|length == 1 %}-8{% endif %}">
+                                {% if eg.contentType == "application/pdf" %}
+                                    <iframe src="/read-example/{{ eg.fileId }}" width="100%" height="250px">
+
+                                    </iframe>
+                                {% elseif eg.contentType starts with 'image' %}
+                                    <img src="/read-example/{{ eg.fileId }}" width="100%">
+                                {% elseif eg.contentType == 'text/markdown' %}
+                                    <iframe src="/read-markdown/{{ eg.fileId }}" width="100%" height="250px">
+
+                                    </iframe>
+                                {% elseif eg.contentType starts with 'text' %}
+                                    <iframe src="/read-example/{{ eg.fileId }}" width="100%" height="250px">
+
+                                    </iframe>
+                                {% else %}
+                                    <iframe src="/read-example/{{ eg.fileId }}" width="100%" height="250px">
+
+                                    </iframe>
+                                {% endif %}
+                            </div>
+                            {% if result["examples"]|slice(i * ncpr, ncpr)|length == 1 %}
+                                <div class="col-lg-2"></div>
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success">Edit</button>
+                    <button type="button" class="btn btn-info"
+                            onclick="window.open('/admin/addexample/organic/{{ result['_id'] }}')">Add example</button>
+                    <button type="button" class="btn btn-warning">Add mechanism</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
