@@ -36,7 +36,7 @@
                         <a class="nav-link" href="#">All Content</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Suggest Content</a>
+                        <a class="nav-link {% if selected == 'suggest_content' %}active{% endif %}" href="/suggest">Suggest Content</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if selected starts with "organic" %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
