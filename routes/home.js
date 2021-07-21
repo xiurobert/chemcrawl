@@ -12,13 +12,24 @@ router.get('/', ash(async (req, res) => {
     }));
 }));
 
-router.get('/suggest', function (req, res) {
+router.get('/suggest', ash(async (req, res) => {
+    res.end(await twing.render('suggest_content.twig', {
+        "app_name": config.app.name
+    }));
+}));
 
-});
+router.post('/suggest', ash(async(req, res) => {
+    let name = req.body["name"];
+    let suggestionE = req.body.suggestion;
+    console.log("Name: " + name + ", Suggestion: " + suggestionE)
+    res.redirect("/suggest/success")
+}))
 
-router.post('/suggest', function (req, res) {
-
-});
+router.get('/suggest/success', ash(async (req, res) => {
+    res.end(await twing.render('success.twig', {
+        "app_name": config.app.name
+    }));
+}));
 
 router.get('/read-markdown/:fileId', ash(async(req, res) => {
     function streamToString (stream) {

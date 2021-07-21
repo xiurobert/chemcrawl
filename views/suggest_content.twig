@@ -1,0 +1,26 @@
+{% extends 'includes/layout.twig' %}
+{% set selected = 'suggest_content' %}
+{% set mode = 'dark' %}
+{% set title = 'Suggestions square' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block main %}
+
+    <div class="container mt-3">
+        <form id="suggestionsForm" method="POST" action="/suggest">
+            <div class="form-group">
+                <label for="nameInput">Name</label>
+                <input name="name" class="form-control mt-3" id="nameInput" placeholder="Your Name.">
+            </div>
+            <div class="form-group mt-3">
+                <label for="contentSuggest mt-3">Input your content suggestions here!</label>
+                <textarea name="suggestion" class="form-control mt-3" id="contentSuggest" rows="3"></textarea>
+            </div>
+        </form>
+        <input type="submit" class="btn btn-dark mt-3" form="suggestionsForm" value="Submit">
+    </div>
+
+{% endblock %}
