@@ -17,11 +17,17 @@
 
         <div class="row justify-content-center">
             <div class="col-sm-auto text-center">
-                <button type="button" class="btn btn-primary">Browse content</button>
+                <button id="browseButton" type="button" class="btn btn-primary">Browse content</button>
             </div>
             <div class="col-auto text-center">
-                <button type="button" class="btn btn-secondary">Suggest content</button>
+                <button id="suggestButton" type="button" class="btn btn-secondary">Suggest content</button>
             </div>
         </div>
     </div>
+    <script>
+        $("#suggestButton").on("click",
+            function(){
+                window.open("/suggest")
+            })
+    </script>
 {% endblock %}
