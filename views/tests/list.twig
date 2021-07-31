@@ -17,20 +17,20 @@
         <div class="row">
             <div class="col-md-8">
                 <h5 class="text-left" style="display: inline">Sort criteria > </h5>
-{#                <div class="btn-group" role="group">#}
-{#                    <input type="radio" class="btn-check" name="btnradio" id="rxnName-sort" autocomplete="off"#}
-{#                           {% if sortBy == "abc" %}checked{% endif %}#}
-{#                           onclick="window.location.href = '/organic/rxn-list/abc-{{ sortOrder }}'">#}
-{#                    <label class="btn btn-outline-info" for="rxnName-sort">Name</label>#}
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="btnradio" id="rxnName-sort" autocomplete="off"
+                           {% if sortBy == "abc" %}checked{% endif %}
+                           onclick="window.location.href = '/organic/rxn-list/abc-{{ sortOrder }}'">
+                    <label class="btn btn-outline-info" for="rxnName-sort">Name</label>
 
-{#                    <input type="radio" class="btn-check" name="btnradio" id="rxnType-sort" autocomplete="off"#}
-{#                           {% if sortBy == "type" %}checked{% endif %}#}
-{#                           onclick="window.location.href = '/organic/rxn-list/type-{{ sortOrder }}'">#}
-{#                    <label class="btn btn-outline-info" for="rxnType-sort">Type</label>#}
+                    <input type="radio" class="btn-check" name="btnradio" id="rxnType-sort" autocomplete="off"
+                           {% if sortBy == "type" %}checked{% endif %}
+                           onclick="window.location.href = '/organic/rxn-list/type-{{ sortOrder }}'">
+                    <label class="btn btn-outline-info" for="rxnType-sort">Type</label>
 
-{#                    <input type="radio" class="btn-check" name="btnradio" id="rxnReagent-sort" autocomplete="off">#}
-{#                    <label class="btn btn-outline-info" for="rxnReagent-sort">Reagent</label>#}
-{#                </div>#}
+                    <input type="radio" class="btn-check" name="btnradio" id="rxnReagent-sort" autocomplete="off">
+                    <label class="btn btn-outline-info" for="rxnReagent-sort">Reagent</label>
+                </div>
             </div>
             <div class="col-md-4">
 {#                <div class="btn-group" role="group">#}

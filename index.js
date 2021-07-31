@@ -7,7 +7,8 @@ const logging = require("./logging");
 app.use(nocache());
 
 app.use('/', require("./routes/home"));
-app.use('/organic', require("./routes/organic"))
+app.use('/organic', require("./routes/organic"));
+app.use('/distinguishing-tests', require("./routes/distinguishing_tests"));
 app.use('/admin', require("./routes/admin"));
 app.use('/test', require("./routes/distinguishing_tests"));
 

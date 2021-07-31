@@ -53,24 +53,43 @@ router.get('/login', ash(async(req, res) => {
 
 router.post('/login', bodyParser.urlencoded({ extended: true }),
     ash(async (req, res) => {
-    await mongo_client.connect();
-    const db = mongo_client.db(config.db.name);
-    const coll = db.collection("admins");
-    let result = await coll.findOne({'username': req.body["username"]});
-    if (!result) {
-        res.status(400);
-        res.end('No such username');
-    } else {
-        console.log(`${logging.prefix} ${logging.levels.debug} User logging in: ${req.body["username"]}`);
-        if (await bcrypt.compare(req.body["password"], result["password"])) {
-            req.session.loggedIn = true;
-            req.session.userId = res['_id'];
-            req.session.isAdmin = true;
-            console.log(`${logging.prefix} ${logging.levels.debug} Logged in user: ${req.body["username"]}`);
-            res.redirect('/admin/dashboard');
+        if (req.session && req.session.userId && req.session.isAdmin) {
+            res.redirect("/admin/dashboard");
+        } else {
+            await mongo_client.connect();
+            const db = mongo_client.db(config.db.name);
+            const coll = db.collection("admins");
+            let result = await coll.findOne({'username': req.body["username"]});
+            if (!result) {
+                res.status(400);
+                res.end('No such username');
+            } else {
+                console.log(`${logging.prefix} ${logging.levels.debug} User logging in: ${req.body["username"]}`);
+                console.log(`${logging.prefix} ${logging.levels.debug} Now attempting bcrypt.compare`);
+                const compare = await bcrypt.compare(req.body["password"], result["password"]);
+                if (compare) {
+                    req.session.loggedIn = true;
+                    req.session.userId = result['_id'].toString();
+                    req.session.isAdmin = true;
+                    console.log(`${logging.prefix} ${logging.levels.debug} Logged in user: ${req.body["username"]}`);
+                    res.redirect('/admin/dashboard');
+                }
+            }
         }
-    }
-}));
+
+    }));
+
+router.get('/logout', requires_admin, (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.log(`${logging.prefix} ${logging.levels.err} Error while destroying session`);
+            console.log(`${logging.prefix} ${logging.levels.err} ${err.stack}`);
+            res.status(500).end("Could not log out");
+        } else {
+            res.redirect("/");
+        }
+    })
+})
 
 router.get('/dashboard', requires_admin, (req, res) => {
     res.end('dashboard');

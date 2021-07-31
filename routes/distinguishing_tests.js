@@ -6,8 +6,8 @@ const mongo = require("mongodb");
 const logging = require("../logging");
 const {mongo_client} = require("../bruh");
 
-router.get('/', ash(async (req, res) => {
-    res.end(await twing.render('index.twig', {
+router.get('/list/:sortBy-:sortOrder', ash(async (req, res) => {
+    res.end(await twing.render('tests/list.twig', {
         "app_name": config.app.name
     }));
 }))
