@@ -18,32 +18,32 @@
             <div class="col-md-8">
                 <h5 class="text-left" style="display: inline">Sort criteria > </h5>
                 <div class="btn-group" role="group">
-                    <input type="radio" class="btn-check" name="btnradio" id="rxnName-sort" autocomplete="off"
+                    <input type="radio" class="btn-check" name="btnradio" id="testName-sort" autocomplete="off"
                            {% if sortBy == "abc" %}checked{% endif %}
-                           onclick="window.location.href = '/organic/rxn-list/abc-{{ sortOrder }}'">
-                    <label class="btn btn-outline-info" for="rxnName-sort">Name</label>
+                           onclick="window.location.href = '/distinguishing-tests/list/abc-{{ sortOrder }}'">
+                    <label class="btn btn-outline-info" for="testName-sort">Name</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="rxnType-sort" autocomplete="off"
-                           {% if sortBy == "type" %}checked{% endif %}
-                           onclick="window.location.href = '/organic/rxn-list/type-{{ sortOrder }}'">
-                    <label class="btn btn-outline-info" for="rxnType-sort">Type</label>
+{#                    <input type="radio" class="btn-check" name="btnradio" id="testType-sort" autocomplete="off"#}
+{#                           {% if sortBy == "type" %}checked{% endif %}#}
+{#                           onclick="window.location.href = '/organic/distinguishing-tests/list/type-{{ sortOrder }}'">#}
+{#                    <label class="btn btn-outline-info" for="testType-sort">Type</label>#}
 
-                    <input type="radio" class="btn-check" name="btnradio" id="rxnReagent-sort" autocomplete="off">
-                    <label class="btn btn-outline-info" for="rxnReagent-sort">Reagent</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="testReagent-sort" autocomplete="off">
+                    <label class="btn btn-outline-info" for="testReagent-sort">Reagent</label>
                 </div>
             </div>
             <div class="col-md-4">
-{#                <div class="btn-group" role="group">#}
-{#                    <input type="radio" class="btn-check" name="btnradio1" id="sort-asc" autocomplete="off"#}
-{#                           {% if sortOrder == "asc" %}checked{% endif %}#}
-{#                           onclick="window.location.href = '/organic/rxn-list/{{ sortBy }}-asc'">#}
-{#                    <label class="btn btn-outline-primary" for="sort-asc">&#9650;</label>#}
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="btnradio1" id="sort-asc" autocomplete="off"
+                           {% if sortOrder == "asc" %}checked{% endif %}
+                           onclick="window.location.href = '/distinguishing-tests/list/{{ sortBy }}-asc'">
+                    <label class="btn btn-outline-primary" for="sort-asc">&#9650;</label>
 
-{#                    <input type="radio" class="btn-check" name="btnradio1" id="sort-dsc" autocomplete="off"#}
-{#                           {% if sortOrder == "dsc" %}checked{% endif %}#}
-{#                           onclick="window.location.href = '/organic/rxn-list/{{ sortBy }}-dsc'">#}
-{#                    <label class="btn btn-outline-primary" for="sort-dsc">&#9660;</label>#}
-{#                </div>#}
+                    <input type="radio" class="btn-check" name="btnradio1" id="sort-dsc" autocomplete="off"
+                           {% if sortOrder == "dsc" %}checked{% endif %}
+                           onclick="window.location.href = '/distinguishing-tests/list/{{ sortBy }}-dsc'">
+                    <label class="btn btn-outline-primary" for="sort-dsc">&#9660;</label>
+                </div>
                 <h5 class="text-right" style="display: inline">Sort Order</h5>
             </div>
 
@@ -53,25 +53,19 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Reaction Name</th>
-                            <th scope="col">Reaction Type</th>
-                            <th scope="col">Reaction SubType</th>
-                            <th scope="col">Mechanism Needed</th>
+                            <th scope="col">Test Name</th>
                             <th scope="col">Reagents</th>
                             <th scope="col">Conditions</th>
-                            <th scope="col">View Reaction</th>
+                            <th scope="col">View Test</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% for rxn in result %}
+                    {% for test in result %}
                         <tr>
-                            <th>{{ rxn.name }}</th>
-                            <th>{{ rxn.type }}</th>
-                            <th>{{ rxn.subType }}</th>
-                            <th>{{ rxn.needsMech ? 'Yes' : 'No'}}</th>
+                            <th>{{ test.name }}</th>
                             <th>
                                 <ul>
-                                    {% for reagent in rxn.reagents %}
+                                    {% for reagent in test.reagents %}
                                         <li>{{ reagent }}</li>
                                     {% endfor %}
                                 </ul>
@@ -79,7 +73,7 @@
                             </th>
                             <th>
                                 <ul>
-                                    {% for cond in rxn.conditions %}
+                                    {% for cond in test.conditions %}
                                         <li>{{ cond }}</li>
                                     {% endfor %}
                                 </ul>
@@ -87,8 +81,8 @@
                             </th>
                             <th>
                                 <button class="btn btn-success"
-                                        onclick="window.open('/organic/rxn/{{ rxn['_id'] }}', '_blank')">
-                                    View Reaction
+                                        onclick="window.open('/distinguishing-tests/test/{{ rxn['_id'] }}', '_blank')">
+                                    View Test
                                 </button>
                             </th>
                         </tr>
